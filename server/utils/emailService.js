@@ -65,7 +65,55 @@ const sendTaskNotification = async (email, taskTitle, action) => {
   }
 };
 
+const sendTaskAssignmentEmail = async (email, assignedBy, taskTitle, taskDescription) => {
+  try {
+    const info = await transporter.sendMail({
+      from: `Umbra TMS <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: `Bir Göreve Atandınız: ${taskTitle}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333;">Yeni Görev Ataması</h2>
+          <p><b>${assignedBy}</b> tarafından bir göreve atandınız.</p>
+          <p><b>Görev Başlığı:</b> ${taskTitle}</p>
+          <p><b>Açıklama:</b> ${taskDescription || "-"}</p>
+          <p style="color: #666; font-size: 14px;">Umbra TMS üzerinden detayları görebilirsiniz.</p>
+        </div>
+      `,
+    });
+    console.log('Task assignment email gönderildi:', info.messageId);
+    return true;
+  } catch (error) {
+    console.error('Task assignment email gönderme hatası:', error);
+    return false;
+  }
+};
+
+const sendTaskStageChangeEmail = async (email, taskTitle, oldStage, newStage) => {
+  try {
+    const info = await transporter.sendMail({
+      from: `Umbra TMS <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: `Görev Durumu Güncellendi: ${taskTitle}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333;">Görev Durumu Değişti</h2>
+          <p><b>${taskTitle}</b> başlıklı görevin durumu <b>${oldStage}</b> → <b>${newStage}</b> olarak güncellendi.</p>
+          <p style="color: #666; font-size: 14px;">Umbra TMS üzerinden detayları görebilirsiniz.</p>
+        </div>
+      `,
+    });
+    console.log('Task stage change email gönderildi:', info.messageId);
+    return true;
+  } catch (error) {
+    console.error('Task stage change email gönderme hatası:', error);
+    return false;
+  }
+};
+
 export {
   sendVerificationEmail,
-  sendTaskNotification
+  sendTaskNotification,
+  sendTaskAssignmentEmail,
+  sendTaskStageChangeEmail
 }; 

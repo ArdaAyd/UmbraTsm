@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import Notice from "../models/notis.js";
 import Task from "../models/taskModel.js";
 import User from "../models/userModel.js";
+import { sendTaskAssignmentEmail, sendTaskStageChangeEmail } from "../utils/emailService.js";
 
 const createTask = asyncHandler(async (req, res) => {
   try {
@@ -55,11 +56,21 @@ const createTask = asyncHandler(async (req, res) => {
       _id: team,
     });
 
+    // Atayan kişinin adını bul
+    const assigner = await User.findById(userId);
+    const assignerName = assigner ? assigner.name : "Bir kullanıcı";
+
     if (users) {
       for (let i = 0; i < users.length; i++) {
         const user = users[i];
-
         await User.findByIdAndUpdate(user._id, { $push: { tasks: task._id } });
+        // E-posta bildirimi gönder
+        await sendTaskAssignmentEmail(
+          user.email,
+          assignerName,
+          title,
+          description
+        );
       }
     }
 
@@ -168,10 +179,25 @@ const updateTaskStage = asyncHandler(async (req, res) => {
     const { stage } = req.body;
 
     const task = await Task.findById(id);
+    const oldStage = task.stage;
 
     task.stage = stage.toLowerCase();
 
     await task.save();
+
+    // Eğer stage değiştiyse, takım üyelerine e-posta gönder
+    if (oldStage !== stage.toLowerCase()) {
+      const users = await User.find({ _id: { $in: task.team } });
+      for (let i = 0; i < users.length; i++) {
+        const user = users[i];
+        await sendTaskStageChangeEmail(
+          user.email,
+          task.title,
+          oldStage,
+          stage
+        );
+      }
+    }
 
     res
       .status(200)

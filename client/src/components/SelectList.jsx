@@ -5,7 +5,7 @@ const SelectList = ({
   name,
   register,
   error,
-  options,
+  options = [],
   defaultOption,
   className = "",
 }) => {
