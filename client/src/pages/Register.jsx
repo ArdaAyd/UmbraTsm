@@ -35,8 +35,7 @@ const Register = () => {
               Tüm görevlerinizi tek bir yerde yönetin!
             </span>
             <p className='flex flex-col gap-0 md:gap-4 text-4xl md:text-6xl 2xl:text-7xl font-black text-center dark:text-gray-400 text-blue-700'>
-              <span>Bulut Tabanlı</span>
-              <span>Görev Yöneticisi</span>
+              <span>Umbra Task Manager</span>
             </p>
           </div>
         </div>

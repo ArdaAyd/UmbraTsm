@@ -43,8 +43,7 @@ const Login = () => {
               Manage all your task in one place!
             </span>
             <p className='flex flex-col gap-0 md:gap-4 text-4xl md:text-6xl 2xl:text-7xl font-black text-center dark:text-gray-400 text-blue-700'>
-              <span>Cloud-based</span>
-              <span>Task Manager</span>
+              <span>Umbra Task Manager</span>
             </p>
 
             <div className='cell'>

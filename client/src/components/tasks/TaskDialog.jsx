@@ -172,21 +172,26 @@ export default function TaskDialog({ task }) {
       label: "Open Task",
       icon: <AiTwotoneFolderOpen className='mr-2 h-5 w-5' aria-hidden='true' />,
       onClick: () => navigate(`/task/${task._id}`),
+      disabled: false,
     },
     {
       label: "Edit",
       icon: <MdOutlineEdit className='mr-2 h-5 w-5' aria-hidden='true' />,
-      onClick: () => setOpenEdit(true),
+      onClick: () => {},
+      disabled: true,
+      tooltip: "Yakında!"
     },
     {
       label: "Add Sub-Task",
       icon: <MdAdd className='mr-2 h-5 w-5' aria-hidden='true' />,
       onClick: () => setOpen(true),
+      disabled: false,
     },
     {
       label: "Duplicate",
       icon: <HiDuplicate className='mr-2 h-5 w-5' aria-hidden='true' />,
       onClick: () => duplicateHanlder(),
+      disabled: false,
     },
   ];
 
@@ -205,11 +210,12 @@ export default function TaskDialog({ task }) {
                   <Menu.Item key={el.label}>
                     {({ active }) => (
                       <button
-                        disabled={index === 0 ? false : !user.isAdmin}
+                        disabled={el.disabled}
                         onClick={el?.onClick}
+                        title={el.disabled && el.tooltip ? el.tooltip : ""}
                         className={`${
                           active ? "bg-blue-500 text-white" : "text-gray-900"
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:text-gray-400`}
+                        } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:text-gray-400 disabled:cursor-not-allowed`}
                       >
                         {el.icon}
                         {el.label}

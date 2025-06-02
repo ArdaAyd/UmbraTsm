@@ -2,15 +2,34 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+// Singleton Pattern ile transporter
+class EmailTransporter {
+  constructor() {
+    if (!EmailTransporter.instance) {
+      this.transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+      EmailTransporter.instance = this;
+    }
+    return EmailTransporter.instance;
+  }
+
+  getTransporter() {
+    return this.transporter;
+  }
+}
+
+const getEmailTransporter = () => {
+  const instance = new EmailTransporter();
+  return instance.getTransporter();
+};
 
 const sendVerificationEmail = async (email, code) => {
+  const transporter = getEmailTransporter();
   try {
     const info = await transporter.sendMail({
       from: `Umbra TMS <${process.env.EMAIL_USER}>`,
@@ -46,6 +65,7 @@ const sendVerificationEmail = async (email, code) => {
 };
 
 const sendTaskNotification = async (email, taskTitle, action) => {
+  const transporter = getEmailTransporter();
   try {
     const info = await transporter.sendMail({
       from: `Umbra TMS <${process.env.EMAIL_USER}>`,
@@ -66,6 +86,7 @@ const sendTaskNotification = async (email, taskTitle, action) => {
 };
 
 const sendTaskAssignmentEmail = async (email, assignedBy, taskTitle, taskDescription) => {
+  const transporter = getEmailTransporter();
   try {
     const info = await transporter.sendMail({
       from: `Umbra TMS <${process.env.EMAIL_USER}>`,
@@ -90,6 +111,7 @@ const sendTaskAssignmentEmail = async (email, assignedBy, taskTitle, taskDescrip
 };
 
 const sendTaskStageChangeEmail = async (email, taskTitle, oldStage, newStage) => {
+  const transporter = getEmailTransporter();
   try {
     const info = await transporter.sendMail({
       from: `Umbra TMS <${process.env.EMAIL_USER}>`,
@@ -111,9 +133,28 @@ const sendTaskStageChangeEmail = async (email, taskTitle, oldStage, newStage) =>
   }
 };
 
+// Factory Pattern: NotificationFactory
+class NotificationFactory {
+  static createNotification(type, params) {
+    switch (type) {
+      case 'verification':
+        return sendVerificationEmail(params.email, params.code);
+      case 'taskAssignment':
+        return sendTaskAssignmentEmail(params.email, params.assignedBy, params.taskTitle, params.taskDescription);
+      case 'taskStageChange':
+        return sendTaskStageChangeEmail(params.email, params.taskTitle, params.oldStage, params.newStage);
+      case 'taskNotification':
+        return sendTaskNotification(params.email, params.taskTitle, params.action);
+      default:
+        throw new Error('Bilinmeyen bildirim tipi!');
+    }
+  }
+}
+
 export {
   sendVerificationEmail,
   sendTaskNotification,
   sendTaskAssignmentEmail,
-  sendTaskStageChangeEmail
+  sendTaskStageChangeEmail,
+  NotificationFactory
 }; 
