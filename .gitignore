@@ -1,1 +1,22 @@
-README.md
+# Environment files
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Build directories
+/dist
+
+# Dependency directories (already tracked, but ignore new ones)
+node_modules
+
+# Optional: OS files
+.DS_Store
+Thumbs.db
