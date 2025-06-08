@@ -17,7 +17,7 @@ const SelectList = ({
       <select
         {...register}
         className={`w-full rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-900 px-4 py-2 text-gray-700 dark:text-gray-300 focus:outline-none focus:border-blue-500 ${className}`}
-      >
+          >
         <option value="" disabled>
           {defaultOption}
         </option>

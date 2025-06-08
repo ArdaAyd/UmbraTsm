@@ -265,12 +265,12 @@ const createSubTask = asyncHandler(async (req, res) => {
 const getAllTask = asyncHandler(async (req, res) => {
   try {
     const { strQuery, isTrashed, search } = req.query;
-    const { userId, isAdmin } = req.user;
+  const { userId, isAdmin } = req.user;
 
     let query = {};
 
     // Eğer kullanıcı admin değilse, sadece kendisine atanan görevleri görebilir
-    if (!isAdmin) {
+  if (!isAdmin) {
       try {
         const objectId = mongoose.Types.ObjectId.isValid(userId)
           ? new mongoose.Types.ObjectId(userId)
@@ -280,7 +280,7 @@ const getAllTask = asyncHandler(async (req, res) => {
       } catch (err) {
         console.log("getAllTask -> ObjectId conversion error:", err);
         return res.status(400).json({ status: false, message: "Geçersiz userId" });
-      }
+  }
     }
 
     if (strQuery) {
@@ -289,9 +289,9 @@ const getAllTask = asyncHandler(async (req, res) => {
 
     if (isTrashed) {
       query.isTrashed = isTrashed;
-    }
+  }
 
-    if (search) {
+  if (search) {
       query.title = { $regex: search, $options: "i" };
     }
 

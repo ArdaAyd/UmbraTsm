@@ -86,7 +86,7 @@ const registerUser = asyncHandler(async (req, res) => {
           message: "Email gönderilemedi"
         });
       }
-      user.password = undefined;
+    user.password = undefined;
       res.status(201).json({
         status: true,
         message: "Registration successful. Please check your email for the verification code.",
