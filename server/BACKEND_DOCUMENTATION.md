@@ -1,7 +1,5 @@
 # **Umbra: Task Management System - Back-End Proje Dokümantasyonu**
 
-**Tarih:** 04.06.2024
-
 ### **1. Projeye Genel Bakış**
 
 Bu proje, kayıtlı kullanıcıların görevlerini yönetmek için oluşturulmuş RESTful bir arka uç hizmetidir. API, kimlik doğrulama, yetkilendirme, görevler için CRUD (Oluşturma, Okuma, Güncelleme, Silme) işlemleri ve bildirim özelliklerini desteklemektedir. Sistem, bir yönetici paneli ve son kullanıcılar için bir görev yönetimi uygulaması tarafından kullanılmak üzere tasarlanmıştır.

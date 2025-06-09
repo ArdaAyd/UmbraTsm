@@ -1,7 +1,5 @@
 # **Umbra: Task Management System - Front-End Proje Dokümantasyonu**
 
-**Tarih:** 04.06.2024
-
 ### **1. Projeye Genel Bakış**
 
 Bu doküman, Umbra Task Management System'in client (istemci) tarafı uygulamasının teknik detaylarını, mimarisini ve geliştirme süreçlerini açıklamaktadır. Uygulama, kullanıcılara görevlerini yönetebilecekleri, takım arkadaşlarıyla iş birliği yapabilecekleri ve proje ilerlemesini takip edebilecekleri zengin ve reaktif bir arayüz sunmak amacıyla geliştirilmiştir. Backend servisiyle REST API üzerinden haberleşir.

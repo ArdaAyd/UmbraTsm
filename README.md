@@ -17,25 +17,25 @@
 
 **Umbra TMS**, modern web teknolojileri kullanılarak geliştirilmiş, takım içi görev yönetimi ve iş birliğini kolaylaştıran bulut tabanlı bir proje yönetimi uygulamasıdır. Kullanıcı dostu arayüzü ve güçlü yönetici yetenekleriyle, ekiplerin verimliliğini ve organizasyonunu en üst düzeye çıkarmayı hedefler.
 
-## ✨ **Temel Özellikler**
+##  **Temel Özellikler**
 
--   **👨‍💼 Yönetici Paneli:**
+-   **Yönetici Paneli:**
     -   Kullanıcı Ekleme/Çıkarma ve Yönetimi
     -   Kullanıcıları Aktif/Pasif Etme
     -   Tüm Görevleri Görüntüleme ve Yönetme
--   **📝 Kapsamlı Görev Yönetimi:**
+-   **Kapsamlı Görev Yönetimi:**
     *   Görev Oluşturma, Güncelleme, Silme (CRUD)
     *   Sürükle-Bırak Destekli Kanban Panosu (`Yapılacak`, `Devam Ediyor`, `Tamamlandı`)
     *   Görevlere Öncelik Atama (`Yüksek`, `Orta`, `Düşük`)
     *   Alt Görevler Ekleme ve Takip Etme
--   **👥 Takım İşbirliği:**
+-   **Takım İşbirliği:**
     *   Görevlere Kullanıcı Atama
     *   Görevler Üzerine Yorum Yapma ve Aktivite Takibi
--   **🚀 Kullanıcı Odaklı Arayüz:**
+-   **Kullanıcı Odaklı Arayüz:**
     *   Rol Bazlı Görünüm (Admin / Kullanıcı)
     *   Kullanıcı Profili ve Şifre Güncelleme
     *   Gerçek Zamanlı Bildirimler
--   **📊 Dashboard:**
+-   **Dashboard:**
     *   Proje ve kullanıcı metriklerini gösteren interaktif grafikler.
 
 ---
@@ -53,7 +53,7 @@ Bu proje, **MERN Stack** üzerine kurulmuştur ve modern web geliştirme araçla
 
 ---
 
-## 🚀 **Projeyi Başlatma**
+##  **Projeyi Başlatma**
 
 Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin.
 
@@ -139,6 +139,6 @@ Daha detaylı bilgi için `client/FRONTEND_DOCUMENTATION.md` ve `server/BACKEND_
 
 ---
 
-## 📧 **İletişim**
+##  **İletişim**
 
 -   **Arda Aydın** - [aydinarda@ogr.iuc.edu.tr](mailto:aydinarda@ogr.iuc.edu.tr)
