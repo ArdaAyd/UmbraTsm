@@ -1,60 +1,60 @@
-# **Umbra Task Management System - API Documentation**
+# **Umbra Görev Yönetim Sistemi - API Dokümantasyonu**
 
-**Version:** 1.0.0
-**Base Path:** `/api`
+**Sürüm:** 1.0.0
+**Ana Dizin:** `/api`
 
 ---
 
-## **Authentication & Authorization**
+## **Kimlik Doğrulama ve Yetkilendirme**
 
-Authentication is handled via JSON Web Tokens (JWT). A JWT must be sent in the `Authorization` header for all protected routes.
+Kimlik doğrulama, JSON Web Token (JWT) aracılığıyla gerçekleştirilir. Korunan tüm rotalar için `Authorization` başlığında bir JWT gönderilmelidir.
 
 - **Format:** `Authorization: Bearer <your_jwt_token>`
-- **User Roles:**
-  - `User`: Standard user with access to their own tasks and profile.
-  - `Admin`: Has full access to all users and tasks in the system.
+- **Kullanıcı Rolleri:**
+  - `User`: Kendi görevlerine ve profiline erişimi olan standart kullanıcı.
+  - `Admin`: Sistemdeki tüm kullanıcılara ve görevlere tam erişime sahiptir.
 
 ---
 
-## **User Endpoints**
+## **Kullanıcı API Uç Noktaları**
 
-**Base Path:** `/api/user`
+**Ana Dizin:** `/api/user`
 
 ### `POST /register`
-- **Description:** Registers a new user and sends a verification email.
-- **Auth:** None
-- **Body:**
+- **Açıklama:** Yeni bir kullanıcı kaydeder ve bir doğrulama e-postası gönderir.
+- **Yetki:** Yok
+- **Gövde:**
   ```json
   {
     "name": "John Doe",
     "email": "john.doe@example.com",
     "password": "securePassword123",
-    "title": "Software Engineer"
+    "title": "Yazılım Mühendisi"
   }
   ```
-- **Success Response (201' Created):**
+- **Başarılı Yanıt (201 Oluşturuldu):**
   ```json
   {
     "success": true,
-    "message": "User registered successfully, please check your email to complete your registration."
+    "message": "Kullanıcı başarıyla kaydedildi, kaydınızı tamamlamak için lütfen e-postanızı kontrol edin."
   }
   ```
 
 ### `POST /login`
-- **Description:** Logs in a user and returns a JWT token.
-- **Auth:** None
-- **Body:**
+- **Açıklama:** Bir kullanıcıyı oturum açar ve bir JWT token'ı döndürür.
+- **Yetki:** Yok
+- **Gövde:**
   ```json
   {
     "email": "john.doe@example.com",
     "password": "securePassword123"
   }
   ```
-- **Success Response (200 OK):**
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
-    "message": "Login successful.",
+    "message": "Giriş başarılı.",
     "token": "<jwt_access_token>",
     "user": {
       "_id": "<user_id>",
@@ -66,47 +66,47 @@ Authentication is handled via JSON Web Tokens (JWT). A JWT must be sent in the `
   ```
 
 ### `GET /verify-email/:token`
-- **Description:** Verifies the user's email address using the token sent to them.
-- **Auth:** None
-- **URL Params:**
-  - `token` (string, required): The verification token from the email link.
-- **Success Response (200 OK):**
-  - Redirects to the login page on the client with a success message.
+- **Açıklama:** Kullanıcının e-posta adresini, kendisine gönderilen token ile doğrular.
+- **Yetki:** Yok
+- **URL Parametreleri:**
+  - `token` (string, gerekli): E-posta bağlantısından gelen doğrulama token'ı.
+- **Başarılı Yanıt (200 OK):**
+  - İstemcideki giriş sayfasına bir başarı mesajıyla yönlendirir.
 
 ### `POST /logout`
-- **Description:** Logs out the user. The primary action is on the client-side (clearing the token), but this endpoint can be used for server-side logging if needed.
-- **Auth:** `User`
-- **Success Response (200 OK):**
+- **Açıklama:** Kullanıcının oturumunu kapatır. Ana eylem istemci tarafındadır (token'ı temizlemek), ancak bu uç nokta gerekirse sunucu tarafı günlük kaydı için kullanılabilir.
+- **Yetki:** `User`
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
-    "message": "Logged out successfully"
+    "message": "Başarıyla çıkış yapıldı"
   }
   ```
 
 ### `POST /verify-code`
-- **Description:** Verifies a six-digit code sent to the user's email (e.g., for password reset or two-factor auth).
-- **Auth:** None
-- **Body:**
+- **Açıklama:** Kullanıcının e-postasına gönderilen altı haneli bir kodu doğrular (ör. şifre sıfırlama veya iki faktörlü kimlik doğrulama için).
+- **Yetki:** Yok
+- **Gövde:**
   ```json
   {
     "email": "john.doe@example.com",
     "code": "123456"
   }
   ```
-- **Success Response (200 OK):**
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
-    "message": "Code verified successfully."
+    "message": "Kod başarıyla doğrulandı."
   }
   ```
 
 ### `GET /get-team`
-- **Description:** Gets a list of all team members.
-- **Auth:** `Admin`
-- **Query Params:**
-  - `search` (string, optional): Filter users by name or email.
-- **Success Response (200 OK):**
+- **Açıklama:** Tüm ekip üyelerinin bir listesini alır.
+- **Yetki:** `Admin`
+- **Sorgu Parametreleri:**
+  - `search` (string, isteğe bağlı): Kullanıcıları ada veya e-postaya göre filtreleyin.
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
@@ -114,7 +114,7 @@ Authentication is handled via JSON Web Tokens (JWT). A JWT must be sent in the `
       {
         "_id": "<user_id>",
         "name": "Jane Smith",
-        "title": "Project Manager",
+        "title": "Proje Yöneticisi",
         "email": "jane.smith@example.com",
         "isActive": true
       }
@@ -123,15 +123,15 @@ Authentication is handled via JSON Web Tokens (JWT). A JWT must be sent in the `
   ```
 
 ### `GET /notifications`
-- **Description:** Retrieves all unread notifications for the logged-in user.
-- **Auth:** `User`
-- **Success Response (200 OK):**
+- **Açıklama:** Giriş yapmış kullanıcı için tüm okunmamış bildirimleri alır.
+- **Yetki:** `User`
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
     "notifications": [
       {
-        "text": "New task 'Deploy to Production' has been assigned to you.",
+        "text": "'Üretim Ortamına Dağıt' adlı yeni görev size atandı.",
         "task": "<task_id>",
         "createdAt": "..."
       }
@@ -140,98 +140,98 @@ Authentication is handled via JSON Web Tokens (JWT). A JWT must be sent in the `
   ```
 
 ### `PUT /profile`
-- **Description:** Updates the profile information for the logged-in user.
-- **Auth:** `User`
-- **Body:**
+- **Açıklama:** Giriş yapmış kullanıcının profil bilgilerini günceller.
+- **Yetki:** `User`
+- **Gövde:**
   ```json
   {
     "name": "Johnathan Doe",
-    "title": "Senior Software Engineer",
+    "title": "Kıdemli Yazılım Mühendisi",
     "avatarUrl": "https://example.com/new_avatar.png"
   }
   ```
-- **Success Response (200 OK):**
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
-    "message": "User profile updated successfully."
+    "message": "Kullanıcı profili başarıyla güncellendi."
   }
   ```
 
 ### `PUT /read-noti`
-- **Description:** Marks all unread notifications as read for the logged-in user.
-- **Auth:** `User`
-- **Success Response (200 OK):**
+- **Açıklama:** Giriş yapmış kullanıcı için tüm okunmamış bildirimleri okundu olarak işaretler.
+- **Yetki:** `User`
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
-    "message": "Notifications marked as read."
+    "message": "Bildirimler okundu olarak işaretlendi."
   }
   ```
 
 ### `PUT /change-password`
-- **Description:** Changes the password for the logged-in user.
-- **Auth:** `User`
-- **Body:**
+- **Açıklama:** Giriş yapmış kullanıcının şifresini değiştirir.
+- **Yetki:** `User`
+- **Gövde:**
   ```json
   {
     "oldPassword": "securePassword123",
     "newPassword": "evenMoreSecurePassword456"
   }
   ```
-- **Success Response (200 OK):**
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
-    "message": "Password changed successfully."
+    "message": "Şifre başarıyla değiştirildi."
   }
   ```
 
 ### `PUT /:id`
-- **Description:** Activates or deactivates a user's profile.
-- **Auth:** `Admin`
-- **URL Params:**
-  - `id` (string, required): The ID of the user to update.
-- **Body:**
+- **Açıklama:** Bir kullanıcının profilini etkinleştirir veya devre dışı bırakır.
+- **Yetki:** `Admin`
+- **URL Parametreleri:**
+  - `id` (string, gerekli): Güncellenecek kullanıcının ID'si.
+- **Gövde:**
   ```json
   {
     "isActive": false
   }
   ```
-- **Success Response (200 OK):**
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
-    "message": "User status updated successfully."
+    "message": "Kullanıcı durumu başarıyla güncellendi."
   }
   ```
 
 ### `DELETE /:id`
-- **Description:** Deletes a user profile from the system.
-- **Auth:** `Admin`
-- **URL Params:**
-  - `id` (string, required): The ID of the user to delete.
-- **Success Response (200 OK):**
+- **Açıklama:** Bir kullanıcı profilini sistemden siler.
+- **Yetki:** `Admin`
+- **URL Parametreleri:**
+  - `id` (string, gerekli): Silinecek kullanıcının ID'si.
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
-    "message": "User deleted successfully."
+    "message": "Kullanıcı başarıyla silindi."
   }
   ```
 
 ---
 
-## **Task Endpoints**
+## **Görev API Uç Noktaları**
 
-**Base Path:** `/api/task`
+**Ana Dizin:** `/api/task`
 
 ### `POST /create`
-- **Description:** Creates a new task.
-- **Auth:** `Admin`
-- **Body:**
+- **Açıklama:** Yeni bir görev oluşturur.
+- **Yetki:** `Admin`
+- **Gövde:**
   ```json
   {
-    "title": "Design New Homepage",
+    "title": "Yeni Ana Sayfa Tasarla",
     "team": ["<user_id_1>", "<user_id_2>"],
     "stage": "todo",
     "date": "2024-12-31T00:00:00.000Z",
@@ -239,30 +239,30 @@ Authentication is handled via JSON Web Tokens (JWT). A JWT must be sent in the `
     "assets": ["http://example.com/asset1.jpg"]
   }
   ```
-- **Success Response (201 Created):**
+- **Başarılı Yanıt (201 Oluşturuldu):**
   ```json
   {
     "success": true,
-    "message": "Task created successfully.",
+    "message": "Görev başarıyla oluşturuldu.",
     "task": { "_id": "<new_task_id>", ... }
   }
   ```
 
 ### `GET /`
-- **Description:** Lists all tasks. Can be filtered by query parameters. Admins see all tasks; users see tasks assigned to them.
-- **Auth:** `User`
-- **Query Params:**
-  - `stage` (string, optional): "todo", "in progress", or "completed".
-  - `priority` (string, optional): "HIGH", "MEDIUM", "NORMAL", "LOW".
-  - `search` (string, optional): Search term for task titles.
-- **Success Response (200 OK):**
+- **Açıklama:** Tüm görevleri listeler. Sorgu parametreleri ile filtrelenebilir. Yöneticiler tüm görevleri görür; kullanıcılar kendilerine atanan görevleri görür.
+- **Yetki:** `User`
+- **Sorgu Parametreleri:**
+  - `stage` (string, isteğe bağlı): "todo", "in progress", veya "completed".
+  - `priority` (string, isteğe bağlı): "HIGH", "MEDIUM", "NORMAL", "LOW".
+  - `search` (string, isteğe bağlı): Görev başlıkları için arama terimi.
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
     "tasks": [
       {
         "_id": "<task_id>",
-        "title": "Design New Homepage",
+        "title": "Yeni Ana Sayfa Tasarla",
         "stage": "todo",
         "priority": "HIGH",
         ...
@@ -272,66 +272,66 @@ Authentication is handled via JSON Web Tokens (JWT). A JWT must be sent in the `
   ```
 
 ### `GET /:id`
-- **Description:** Retrieves the details of a single task.
-- **Auth:** `User`
-- **URL Params:**
-  - `id` (string, required): The ID of the task.
-- **Success Response (200 OK):**
+- **Açıklama:** Tek bir görevin ayrıntılarını alır.
+- **Yetki:** `User`
+- **URL Parametreleri:**
+  - `id` (string, gerekli): Görevin ID'si.
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
     "task": {
       "_id": "<task_id>",
-      "title": "Design New Homepage",
+      "title": "Yeni Ana Sayfa Tasarla",
       ...
     }
   }
   ```
 
 ### `PUT /update/:id`
-- **Description:** Updates the details of an existing task.
-- **Auth:** `Admin`
-- **URL Params:**
-  - `id` (string, required): The ID of the task to update.
-- **Body:**
+- **Açıklama:** Mevcut bir görevin ayrıntılarını günceller.
+- **Yetki:** `Admin`
+- **URL Parametreleri:**
+  - `id` (string, gerekli): Güncellenecek görevin ID'si.
+- **Gövde:**
   ```json
   {
-    "title": "Updated Task Title",
+    "title": "Güncellenmiş Görev Başlığı",
     "priority": "MEDIUM"
   }
   ```
-- **Success Response (200 OK):**
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
-    "message": "Task updated successfully."
+    "message": "Görev başarıyla güncellendi."
   }
   ```
 
 ### `PUT /:id`
-- **Description:** Moves a task to the trash (soft delete).
-- **Auth:** `Admin`
-- **URL Params:**
-  - `id` (string, required): The ID of the task to trash.
-- **Success Response (200 OK):**
+- **Açıklama:** Bir görevi çöp kutusuna taşır (geçici silme).
+- **Yetki:** `Admin`
+- **URL Parametreleri:**
+  - `id` (string, gerekli): Çöp kutusuna taşınacak görevin ID'si.
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
-    "message": "Task trashed successfully."
+    "message": "Görev başarıyla çöp kutusuna taşındı."
   }
   ```
 
 ### `DELETE /delete-restore/:id`
-- **Description:** Permanently deletes a task or restores a trashed task.
-- **Auth:** `Admin`
-- **URL Params:**
-  - `id` (string, required): The ID of the task.
-- **Query Params:**
-  - `action` (string, optional): Set to "restore" to restore a trashed task. If not provided, the task is permanently deleted.
-- **Success Response (200 OK):**
+- **Açıklama:** Bir görevi kalıcı olarak siler veya çöp kutusundan geri yükler.
+- **Yetki:** `Admin`
+- **URL Parametreleri:**
+  - `id` (string, gerekli): Görevin ID'si.
+- **Sorgu Parametreleri:**
+  - `action` (string, isteğe bağlı): Çöp kutusuna taşınmış bir görevi geri yüklemek için "restore" olarak ayarlayın. Sağlanmazsa, görev kalıcı olarak silinir.
+- **Başarılı Yanıt (200 OK):**
   ```json
   {
     "success": true,
-    "message": "Task deleted/restored successfully."
+    "message": "Görev başarıyla silindi/geri yüklendi."
   }
   ``` 
