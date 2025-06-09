@@ -1,7 +1,5 @@
 # Umbra Task Management System
 
-![Project Banner](https://via.placeholder.com/1200x400.png?text=Umbra+Task+Management+System)
-
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
